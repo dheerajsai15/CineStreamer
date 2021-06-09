@@ -11,7 +11,8 @@ const routes: Routes = [
   {path:'tvshows',component:TVShowsComponent},
   {path:'movies',component:MoviesComponent},
   {path:'latest',component:LatestComponent},
-  {path:'mylist',component:MyListComponent}
+  {path:'mylist',component:MyListComponent},
+  {path:'',component:HomeComponent}
 
 ];
 
