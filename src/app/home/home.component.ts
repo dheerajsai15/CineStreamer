@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Movies } from '../models/movies';
 import { MovieService } from '../services/movie.service';
+import { TvshowsService } from '../services/tvshows.service';
 
 @Component({
   selector: 'app-home',
@@ -13,8 +14,8 @@ export class HomeComponent implements OnInit,OnDestroy {
   trending: Movies;
   popular: Movies;
   topRated: Movies;
-  originals: Movies;
-  nowPlaying: Movies;
+  topRatedShows: Movies;
+  trendingShows: Movies;
   headerBGUrl: string;
 
   sliderConfig = {
@@ -25,7 +26,7 @@ export class HomeComponent implements OnInit,OnDestroy {
   };
 
 
-  constructor(private movie: MovieService) { }
+  constructor(private movie: MovieService,private shows:TvshowsService) { }
 
   ngOnInit(): void{
     this.subs.push(this.movie.getTrending().subscribe(data =>{ 
@@ -34,8 +35,8 @@ export class HomeComponent implements OnInit,OnDestroy {
    }));
   this.subs.push(this.movie.getPopularMovies().subscribe(data => this.popular = data));
   this.subs.push(this.movie.getTopRated().subscribe(data => this.topRated = data));
-  this.subs.push(this.movie.getOriginals().subscribe(data => this.originals = data));
-  this.subs.push(this.movie.getNowPlaying().subscribe(data => this.nowPlaying = data));
+  this.subs.push(this.shows.getTopRated().subscribe(data => this.topRatedShows = data));
+  this.subs.push(this.shows.getTrending().subscribe(data => this.trendingShows = data));
  }
  ngOnDestroy(): void{
   this.subs.map(s => s.unsubscribe())
